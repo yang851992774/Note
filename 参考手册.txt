@@ -1,0 +1,34 @@
+-- 变量-----------------------------------
+_LightColor0                   灯光颜色
+_WorldSpaceLightPos            世界空间光源的位置
+_WorldSpaceCameraPos           世界空间相机的位置
+unity_ObjectToWorld            模型到世界 
+unity_WorldToObject            世界到模型
+
+-- 宏  -----------------------------------
+UNITY_LIGHTMODEL_AMBIENT       环境光
+UNITY_MATRIX_MVP               模型空间-》裁剪空间
+
+
+
+--方法-------------------------------------
+mul(matrix,向量)  将向量从A空间变换到另外B空间
+mul(向量,matrix)  将向量从B空间变换到另外A空间
+saturate(num)     控制在>0
+
+
+-- 笔记---------------------------------------
+基础光照模型 : 自发光(emissive) + 环境光(ambient)  + 漫反射(diffuse) + 高亮反射(specular)
+
+漫反射(diffuse)   n 法线  l 入射光线
+C_diffuse = (C_light * M_diffuse) * max(0,n.l);
+半兰伯特模型(Half Lambert) 一般模式为 A= 0.5   B = 0.5
+C_diffuse = (C_light * M_diffuse) * (A(n.l) + B)
+
+高亮反射(specular) 
+1.  Phong模型 v 观察方向 r 发射光线  gloss 光泽度
+C_specular = (C_light * M_specular ) * pow( max(0,v.r),gloss)
+
+1. Blinn模型  n 法线  h = v+l
+C_specular = (C_light * M_specular ) *pow(  max(0,n.h),gloss)
+
