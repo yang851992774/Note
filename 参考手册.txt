@@ -1,6 +1,6 @@
 -- 变量-----------------------------------
 _LightColor0                   灯光颜色
-_WorldSpaceLightPos            世界空间光源的位置
+_WorldSpaceLightPos0            世界空间光源的位置
 _WorldSpaceCameraPos           世界空间相机的位置
 unity_ObjectToWorld            模型到世界 
 unity_WorldToObject            世界到模型
@@ -15,8 +15,8 @@ UNITY_MATRIX_MVP               模型空间-》裁剪空间
 mul(matrix,向量)  将向量从A空间变换到另外B空间
 mul(向量,matrix)  将向量从B空间变换到另外A空间
 saturate(num)     控制在>0
-
-
+UnityWorldSpaceLightDir(worldpos)  返回关照方向   _WorldSpaceLightPos0 - i.worldPos
+UnityWorldSpaceViewDir(worldpos)   返回观察方向   _WorldSpaceCameraPos - i.worldPos
 -- 笔记---------------------------------------
 基础光照模型 : 自发光(emissive) + 环境光(ambient)  + 漫反射(diffuse) + 高亮反射(specular)
 
