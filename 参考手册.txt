@@ -14,6 +14,31 @@ TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下
 // float3x3 rotation= float3x3(v.tangent.xyz,binormal,v.normal);
 
 
+-- 渲染  -----------------------------------
+// 渲染队列：队列索引号越小越渲染得早        
+// 1、Background  1000            第一个需要渲染的
+// 2、Geometry    2000            所有不透明的
+// 3、AlphaTest   2450			 需要透明的测试的
+// 4、Transparent 3000			 所有透明的
+// 5、Overlay     4000            最后渲染的
+
+	ZWrite Off  深度写入
+  
+// Blend Off                                                关闭混合
+// Blend SrcFactor DstFactor								开启混合。并设置混合因子，源颜色（该片元产生的颜色）*SrcFactor + 目标颜色（已经存在的颜色缓存颜色） * DesFactor
+// Blend SrcFactor DstFactor SrcFactorA DstFactorA 			开启混合 同上，只是使用多个因子来混合透明通道
+// BlendOp BlendOperation								    并非上面两种的方法，而是使用 BlendOperation对他们进行 其他操作
+// One             因子=1
+// Zero            因子 =0
+// SrcColor		   因子 = S.rgb
+// SrcAlpha		   因子 = S.a
+// DstColor 		因子 = D.rgb
+// DstAlpha			因子 = D.a
+// OneMinusSrcColor		因子 = 1-S.rgb
+// OneMinusSrcAlpha		因子 = 1-S.a
+// OneMinusDstColor		因子 = 1-D.rgb
+// OneMinusDstAlpha		因子 = 1-D.a
+
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
 mul(向量,matrix)  将向量从B空间变换到另外A空间
@@ -27,6 +52,8 @@ UnpackNormal(packedNormal)         将 normal map 存储的法线纹理 映�
 tex2D(_MainTex,i.uv)               对纹理进行采集   参数1：需要被采集的纹理  参数2 ： 纹理坐标  return 纹素值
 void clip(float0~4)                参数：裁剪时使用的标量和适量   ，任何一个分量为负数，舍弃当前像素的输出颜色
 
+
+--
 
 -- 笔记---------------------------------------
 基础光照模型 : 自发光(emissive) + 环境光(ambient)  + 漫反射(diffuse) + 高亮反射(specular)
