@@ -8,15 +8,26 @@ unity_WorldToObject            世界到模型
 -- 宏  -----------------------------------
 UNITY_LIGHTMODEL_AMBIENT       环境光
 UNITY_MATRIX_MVP               模型空间-》裁剪空间
-
+TRANSFORM_TEX                  计算经过平铺和偏移后的纹理坐标
+TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下面代码
+// float3 binormal = cross(normalize(v.normal),normalize(v.tangent.xyz)) * v.tangent.w; 
+// float3x3 rotation= float3x3(v.tangent.xyz,binormal,v.normal);
 
 
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
 mul(向量,matrix)  将向量从B空间变换到另外A空间
 saturate(num)     控制在>0
-UnityWorldSpaceLightDir(worldpos)  返回关照方向   _WorldSpaceLightPos0 - i.worldPos
-UnityWorldSpaceViewDir(worldpos)   返回观察方向   _WorldSpaceCameraPos - i.worldPos
+ObjSpaceLightDir(objectPos)        返回模型坐标系的光照方向
+ObjSpaceViewDir(objectPos)         返回模型坐标系的观察方向
+UnityWorldSpaceLightDir(worldpos)  返回关照方向   _WorldSpaceLightPos0 - i.worldPos
+UnityWorldSpaceViewDir(worldpos)   返回观察方向   _WorldSpaceCameraPos - i.worldPos
+UnityObjectToWorldNormal(normal)   模型空间的法线装换成世界空间的法线  /mul(_Object2World,v.normal);
+UnpackNormal(packedNormal)         将 normal map 存储的法线纹理 映射回法线方向  纹素值  映射到 法线方向
+tex2D(_MainTex,i.uv)               对纹理进行采集   参数1：需要被采集的纹理  参数2 ： 纹理坐标  return 纹素值
+void clip(float0~4)                参数：裁剪时使用的标量和适量   ，任何一个分量为负数，舍弃当前像素的输出颜色
+
+
 -- 笔记---------------------------------------
 基础光照模型 : 自发光(emissive) + 环境光(ambient)  + 漫反射(diffuse) + 高亮反射(specular)
 
