@@ -39,6 +39,8 @@ TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下
 // OneMinusDstColor		因子 = 1-D.rgb
 // OneMinusDstAlpha		因子 = 1-D.a
 
+Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
+
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
 mul(向量,matrix)  将向量从B空间变换到另外A空间
