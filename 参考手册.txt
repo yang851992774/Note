@@ -102,7 +102,7 @@ modf	modf(x, out ip)	Splits the value x into fractional and integer parts.
 mul	mul(x, y)	Performs matrix multiplication using x and y.
 noise	noise(x)	Generates a random value using the Perlin-noise algorithm.
 normalize	normalize(x)	Returns a normalized vector.
-pow	pow(x, y)	Returns xy.
+pow	pow(x, y)	Returns x^y.
 radians	radians(x)	Converts x from degrees to radians.
 reflect	reflect(i, n)	Returns a reflection vector.
 refract	refract(i, n, R)	Returns the refraction vector.
