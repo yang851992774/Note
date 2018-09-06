@@ -40,6 +40,7 @@ TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下
 // OneMinusDstAlpha		因子 = 1-D.a
 
 Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
+ColorMask RGB |  A | 0 |其他R、G、B、A任意组合   ColorMask 用于设置颜色通道的写掩码（writeMask） 当 设为0 意味着改Pass 不写入任何颜色通道既不输出任何颜色,这种Pass 只写入深度缓存即可
 
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
