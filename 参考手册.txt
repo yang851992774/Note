@@ -39,6 +39,13 @@ TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下
 // OneMinusDstColor		因子 = 1-D.rgb
 // OneMinusDstAlpha		因子 = 1-D.a
 
+BlendOperation 相关
+Add     O_rgb = SrcColor * S_rgb + DesFactor * D_rgb         O_a = SrcColor * S_a + DesFactor * D_a    
+Sub	    O_rgb = SrcColor * S_rgb - DesFactor * D_rgb         O_a = SrcColor * S_a - DesFactor * D_a    	
+RevSub  O_rgb = DesFactor * S_rgb - SrcColor * D_rgb         O_a = DesFactor * S_a - SrcColor * D_a   
+Min     O_rgba = (min(S_r,D_r),min(S_g,D_g),min(S_b,D_b),min(S_a,D_a))
+Max     O_rgba = (max(S_r,D_r),max(S_g,D_g),max(S_b,D_b),max(S_a,D_a))
+
 Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
 ColorMask RGB |  A | 0 |其他R、G、B、A任意组合   ColorMask 用于设置颜色通道的写掩码（writeMask） 当 设为0 意味着改Pass 不写入任何颜色通道既不输出任何颜色,这种Pass 只写入深度缓存即可
 
