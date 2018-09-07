@@ -61,6 +61,16 @@ Blend One One              // When using Max operation, these factors are ignore
 Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
 ColorMask RGB |  A | 0 |其他R、G、B、A任意组合   ColorMask 用于设置颜色通道的写掩码（writeMask） 当 设为0 意味着改Pass 不写入任何颜色通道既不输出任何颜色,这种Pass 只写入深度缓存即可
 
+LightModel 标签支持的渲染路径：
+Alwarys								不管使用那种路径渲染，该Pass 总会被渲染，但不会计算任何关照
+ForwardBase							用于向前渲染。该Pass会计算环境光，最重要的平行光、逐顶点/SL光源和Ligthmaps
+ForwardAdd							用于向前渲染。该Pass会计算额外的逐像素光源，
+Deferred							用于延迟渲染，该Pass 会渲染 (G-buffer)
+ShadowCaster							
+PrepassBase
+PrepassFinal
+Vertex、VertexLMRGBM、VertexLM
+
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
 mul(向量,matrix)  将向量从B空间变换到另外A空间
