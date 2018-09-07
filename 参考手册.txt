@@ -87,6 +87,9 @@ UnityWorldSpaceLightDir
 ObjSpaceLightDir
 Shade4PointLights(...)
 光源的重要的5个属性：位置、方向、颜色、强度、衰减
+_LightTexture0   _LightTextureB0（使用cookie）  光源衰减纹理 采样光源衰减值
+
+
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
 mul(向量,matrix)  将向量从B空间变换到另外A空间
@@ -203,4 +206,11 @@ C_specular = (C_light * M_specular ) * pow( max(0,v.r),gloss)
 
 1. Blinn模型  n 法线  h = v+l
 C_specular = (C_light * M_specular ) *pow(  max(0,n.h),gloss)
+
+---宏定义相关
+USING_DIRECTIONAL_LIGHT
+#if defined (POINT)
+#elif defined (SPOT)
+
+
 
