@@ -71,6 +71,22 @@ PrepassBase
 PrepassFinal
 Vertex、VertexLMRGBM、VertexLM
 
+向前渲染：ForwardBase 和 ForwardAdd
+#pragma multi_compile_fwdbase     （光照纹理 环境光 只发光 阴影）
+#pragma multi_compile_fwdadd （默认不支持阴影） or #pragma multi_compile_fullshadows （打开阴影）
+
+_LightColor0               该Pass处理的逐像素光源的颜色和强度的乘积   float4
+_WorldSpaceLightPos0       该Pass处理的逐像素的光源位置   平行光_WorldSpaceLightPos0.w = 0  其他 _WorldSpaceLightPos0.w = 1  float4
+_LightMatrix0              从世界->光源坐标变换矩阵  可以采样cookie和光强衰减（attenuation）纹理 float4x4
+unity_4LightPosX0,unity_4LightPosY0,unity_4LightPosZ0  仅BasePass 前4个非重要光源位置（世界空间）  float4
+unity_4LightAtten0                                     仅BasePass 前4个非重要点光源衰减因子       float4
+unity_lightColor				       仅BasePass 前4个非重要点光源颜色          half4[4]
+
+WorldSpaceLightDir
+UnityWorldSpaceLightDir
+ObjSpaceLightDir
+Shade4PointLights(...)
+
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
 mul(向量,matrix)  将向量从B空间变换到另外A空间
