@@ -89,6 +89,7 @@ Shade4PointLights(...)
 光源的重要的5个属性：位置、方向、颜色、强度、衰减
 _LightTexture0   _LightTextureB0（使用cookie）  光源衰减纹理 采样光源衰减值
 
+计算阴影的“三剑客”：SHADOW_COORDS    TRANSFER_SHADOW   SHADOW_ATTENUATION
 
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
