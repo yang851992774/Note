@@ -4,6 +4,7 @@ _WorldSpaceLightPos0            世界空间光源的位置
 _WorldSpaceCameraPos           世界空间相机的位置
 unity_ObjectToWorld            模型到世界 
 unity_WorldToObject            世界到模型
+unity_WorldToLight              世界空间到灯光空间
 
 -- 宏  -----------------------------------
 UNITY_LIGHTMODEL_AMBIENT       环境光
@@ -89,7 +90,8 @@ Shade4PointLights(...)
 光源的重要的5个属性：位置、方向、颜色、强度、衰减
 _LightTexture0   _LightTextureB0（使用cookie）  光源衰减纹理 采样光源衰减值
 
-计算阴影的“三剑客”：SHADOW_COORDS    TRANSFER_SHADOW   SHADOW_ATTENUATION
+计算阴影的“三剑客”：SHADOW_COORDS(index)    TRANSFER_SHADOW(v2f)   SHADOW_ATTENUATION(v2f)
+统一管理阴影和衰减  UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
