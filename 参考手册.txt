@@ -90,8 +90,11 @@ Shade4PointLights(...)
 光源的重要的5个属性：位置、方向、颜色、强度、衰减
 _LightTexture0   _LightTextureB0（使用cookie）  光源衰减纹理 采样光源衰减值
 
-计算阴影的“三剑客”：SHADOW_COORDS(index)    TRANSFER_SHADOW(v2f)   SHADOW_ATTENUATION(v2f)
-统一管理阴影和衰减  UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+计算阴影的“三剑客” or 统一管理阴影和衰减：
+SHADOW_COORDS(index) 申明一个阴影纹理的采样坐标_ShadowCoord 参数：插值寄存器的索引值
+TRANSFER_SHADOW(v2f)    计算阴影纹理坐标,根据不同平台的差异有所不同，依次使用根据平台 屏幕空间的阴影映射 传统阴影映射
+SHADOW_ATTENUATION(v2f)  根据_ShadowCoord 进行采样，得到阴影信息
+UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos)  统一管理阴影和衰减  = atten*shadow
 
 --方法-------------------------------------
 mul(matrix,向量)  将向量从A空间变换到另外B空间
