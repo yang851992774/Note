@@ -118,7 +118,8 @@ ObjSpaceLightDir(objectPos)        返回模型坐标系的光照方向
 ObjSpaceViewDir(objectPos)         返回模型坐标系的观察方向
 UnityWorldSpaceLightDir(worldpos)  返回关照方向   _WorldSpaceLightPos0 - i.worldPos
 UnityWorldSpaceViewDir(worldpos)   返回观察方向   _WorldSpaceCameraPos - i.worldPos
-UnityObjectToWorldNormal(normal)   模型空间的法线装换成世界空间的法线  /mul(_Object2World,v.normal);
+UnityObjectToWorldNormal(normal)   模型空间的法线转换成世界空间的法线  /mul(_Object2World,v.normal);
+UnityObjectToWorldDir(objectDir)   模型空间的方向转换成世界空间的方向  
 UnpackNormal(packedNormal)         将 normal map 存储的法线纹理 映射回法线方向  纹素值  映射到 法线方向
 tex2D(_MainTex,i.uv)               对纹理进行采集   参数1：需要被采集的纹理  参数2 ： 纹理坐标  return 纹素值
 void clip(float0~4)                参数：裁剪时使用的标量和适量   ，任何一个分量为负数，舍弃当前像素的输出颜色
