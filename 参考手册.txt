@@ -35,6 +35,7 @@ TreeBillboard: terrain engine billboarded trees. 地形引擎中的广告牌树�
 Grass: terrain engine grass. 地形引擎中的草。 
 GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌草。
 
+“IgnoreProjector”=“True”告诉Unity3D，我们不希望任何投影类型材质或者贴图，影响我们的物体或者着色器。这个特性往往那个用在GUI上。程序默认“IgnoreProjector”=“Flase”。
 
 	ZWrite Off  深度写入
   
