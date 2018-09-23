@@ -228,6 +228,10 @@ C_specular = (C_light * M_specular ) * pow( max(0,v.r),gloss)
 1. Blinn模型  n 法线  h = v+l
 C_specular = (C_light * M_specular ) *pow(  max(0,n.h),gloss)
 
+菲涅耳反射
+n1 * sin(Q1) = n2 * sin(Q2)
+F_schlick(v,n) = F0 + (1-F0) (1-v.n)^5
+F_empricial(v,n)= max(0,min(1,bias+scale*(1-v*n)^power));
 ---宏定义相关
 USING_DIRECTIONAL_LIGHT
 #if defined (POINT)
