@@ -11,19 +11,57 @@ UNITY_LIGHTMODEL_AMBIENT       环境光
 UNITY_MATRIX_MVP               模型空间-》裁剪空间
 TRANSFORM_TEX                  计算经过平铺和偏移后的纹理坐标
 TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下面代码
-// float3 binormal = cross(normalize(v.normal),normalize(v.tangent.xyz)) * v.tangent.w; 
-// float3x3 rotation= float3x3(v.tangent.xyz,binormal,v.normal);
+float3 binormal = cross(normalize(v.normal),normalize(v.tangent.xyz)) * v.tangent.w; 
+float3x3 rotation= float3x3(v.tangent.xyz,binormal,v.normal);
 
+---------------------------状态设置-----------------------------------------
+ZWrite On | Off  深度写入
+Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
+ColorMask RGB |  A | 0 |其他R、G、B、A任意组合   ColorMask 用于设置颜色通道的写掩码（writeMask） 当 设为0 意味着改Pass 不写入任何颜色通道既不输出任何颜色,这种Pass 只写入深度缓存即可  
 
--- 渲染  -----------------------------------
-// 渲染队列 Queue ：队列索引号越小越渲染得早        
-// 1、Background  1000            第一个需要渲染的  它被用于skyboxes等。
-// 2、Geometry    2000            所有不透明的       这是默认的渲染队列。它被用于绝大多数对象。不透明几何体使用该队列。
-// 3、AlphaTest   2450			 需要透明的测试的  通道检查的几何体使用该队列。它和Geometry队列不同，对于在所有立体物体绘制后渲染的通道检查的对象，它更有效。
-// 4、Transparent 3000			 所有透明的  该渲染队列在Geometry和AlphaTest队列后被渲染。任何通道混合的（也就是说，那些不写入深度缓存的Shaders）对象使用该队列，例如玻璃和粒子效果。
-// 5、Overlay     4000            最后渲染的  该渲染队列是为覆盖物效果服务的。任何最后被渲染的对象使用该队列，例如镜头光晕
+Blend Off                                                关闭混合
+Blend SrcFactor DstFactor								开启混合。并设置混合因子，源颜色（该片元产生的颜色）*SrcFactor + 目标颜色（已经存在的颜色缓存颜色） * DesFactor
+Blend SrcFactor DstFactor SrcFactorA DstFactorA 			开启混合 同上，只是使用多个因子来混合透明通道
+BlendOp BlendOperation								    并非上面两种的方法，而是使用 BlendOperation对他们进行 其他操作
+One             因子=1
+Zero            因子 =0
+SrcColor		   因子 = S.rgb
+SrcAlpha		   因子 = S.a
+DstColor 		因子 = D.rgb
+DstAlpha			因子 = D.a
+OneMinusSrcColor		因子 = 1-S.rgb
+OneMinusSrcAlpha		因子 = 1-S.a
+OneMinusDstColor		因子 = 1-D.rgb
+OneMinusDstAlpha		因子 = 1-D.a
 
-渲染类型 RenderType：
+BlendOperation 相关
+Add     O_rgb = SrcColor * S_rgb + DesFactor * D_rgb         O_a = SrcColor * S_a + DesFactor * D_a    
+Sub	    O_rgb = SrcColor * S_rgb - DesFactor * D_rgb         O_a = SrcColor * S_a - DesFactor * D_a    	
+RevSub  O_rgb = DesFactor * S_rgb - SrcColor * D_rgb         O_a = DesFactor * S_a - SrcColor * D_a   
+Min     O_rgba = (min(S_r,D_r),min(S_g,D_g),min(S_b,D_b),min(S_a,D_a))
+Max     O_rgba = (max(S_r,D_r),max(S_g,D_g),max(S_b,D_b),max(S_a,D_a))
+
+常见混合类型
+Blend SrcAlpha OneMinusSrcAlpha    正常 透明度混合
+Blend OneMinusDstColor  One        柔和相加
+Blend DstColor One                 //正片叠底
+Blend DstColor SrcColor             两倍叠加          
+
+BlendOp Min         变暗
+Blend One One       When using Min operation, these factors are ignored
+
+BlendOp Max			变亮
+Blend One One              When using Max operation, these factors are ignored
+
+-----Tags{"Queue" = "Background" "RenderType：" = "Opaque"}-----------------------标签设置--------------------------
+A、 渲染队列 Queue ：队列索引号越小越渲染得早        
+Background  1000            第一个需要渲染的  它被用于skyboxes等。
+Geometry    2000            所有不透明的       这是默认的渲染队列。它被用于绝大多数对象。不透明几何体使用该队列。
+AlphaTest   2450			 需要透明的测试的  通道检查的几何体使用该队列。它和Geometry队列不同，对于在所有立体物体绘制后渲染的通道检查的对象，它更有效。
+Transparent 3000			 所有透明的  该渲染队列在Geometry和AlphaTest队列后被渲染。任何通道混合的（也就是说，那些不写入深度缓存的Shaders）对象使用该队列，例如玻璃和粒子效果。
+Overlay     4000            最后渲染的  该渲染队列是为覆盖物效果服务的。任何最后被渲染的对象使用该队列，例如镜头光晕
+
+B、渲染类型 RenderType：
 Opaque: 用于大多数着色器（法线着色器、自发光着色器、反射着色器以及地形的着色器）。 
 Transparent:用于半透明着色器（透明着色器、粒子着色器、字体着色器、地形额外通道的着色器）。 
 TransparentCutout: 蒙皮透明着色器（Transparent Cutout，两个通道的植被着色器）。 
@@ -35,48 +73,13 @@ TreeBillboard: terrain engine billboarded trees. 地形引擎中的广告牌树�
 Grass: terrain engine grass. 地形引擎中的草。 
 GrassBillboard: terrain engine billboarded grass. 地形引擎何中的广告牌草。
 
-“IgnoreProjector”=“True”告诉Unity3D，我们不希望任何投影类型材质或者贴图，影响我们的物体或者着色器。这个特性往往那个用在GUI上。程序默认“IgnoreProjector”=“Flase”。
+C、DisableBatching :True|Flase 一些SubShader在使用Unity的批处理会出现问题，是否开启批处理
+D、ForceNoShadowCasting :True|Flase 控制使用该SubShader的物体是否投射阴影
+E、IgnoreProjector:True|Flase  告诉Unity3D，我们不希望任何投影类型材质或者贴图，影响我们的物体或者着色器。这个特性往往那个用在GUI上。程序默认Flase。物体不受Projector的影响，通常用于半透明
+F、CanUseSpriteAltas:True|Flase 当该SubShader是用于精灵（Sprite）时，将该标签设为“False”
+G、PreviewType :Plane|SkyBox 指明材质面板将如何预览该材质，默认材质显示为球形
 
-	ZWrite Off  深度写入
-  
-// Blend Off                                                关闭混合
-// Blend SrcFactor DstFactor								开启混合。并设置混合因子，源颜色（该片元产生的颜色）*SrcFactor + 目标颜色（已经存在的颜色缓存颜色） * DesFactor
-// Blend SrcFactor DstFactor SrcFactorA DstFactorA 			开启混合 同上，只是使用多个因子来混合透明通道
-// BlendOp BlendOperation								    并非上面两种的方法，而是使用 BlendOperation对他们进行 其他操作
-// One             因子=1
-// Zero            因子 =0
-// SrcColor		   因子 = S.rgb
-// SrcAlpha		   因子 = S.a
-// DstColor 		因子 = D.rgb
-// DstAlpha			因子 = D.a
-// OneMinusSrcColor		因子 = 1-S.rgb
-// OneMinusSrcAlpha		因子 = 1-S.a
-// OneMinusDstColor		因子 = 1-D.rgb
-// OneMinusDstAlpha		因子 = 1-D.a
-
-BlendOperation 相关
-Add     O_rgb = SrcColor * S_rgb + DesFactor * D_rgb         O_a = SrcColor * S_a + DesFactor * D_a    
-Sub	    O_rgb = SrcColor * S_rgb - DesFactor * D_rgb         O_a = SrcColor * S_a - DesFactor * D_a    	
-RevSub  O_rgb = DesFactor * S_rgb - SrcColor * D_rgb         O_a = DesFactor * S_a - SrcColor * D_a   
-Min     O_rgba = (min(S_r,D_r),min(S_g,D_g),min(S_b,D_b),min(S_a,D_a))
-Max     O_rgba = (max(S_r,D_r),max(S_g,D_g),max(S_b,D_b),max(S_a,D_a))
-
-常见混合类型
-Blend SrcAlpha OneMinusSrcAlpha    // 正常 透明度混合
-Blend OneMinusDstColor  One        // 柔和相加
-Blend DstColor One                 //正片叠底
-Blend DstColor SrcColor             // 两倍叠加          
-
-BlendOp Min         // 变暗
-Blend One One       // When using Min operation, these factors are ignored
-
-BlendOp Max			// 变亮
-Blend One One              // When using Max operation, these factors are ignored
-
-Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
-ColorMask RGB |  A | 0 |其他R、G、B、A任意组合   ColorMask 用于设置颜色通道的写掩码（writeMask） 当 设为0 意味着改Pass 不写入任何颜色通道既不输出任何颜色,这种Pass 只写入深度缓存即可
-
-LightModel 标签支持的渲染路径：
+H、LightModel 标签支持的渲染路径：
 Alwarys								不管使用那种路径渲染，该Pass 总会被渲染，但不会计算任何关照
 ForwardBase							用于向前渲染。该Pass会计算环境光，最重要的平行光、逐顶点/SL光源和Ligthmaps
 ForwardAdd							用于向前渲染。该Pass会计算额外的逐像素光源，
@@ -85,6 +88,8 @@ ShadowCaster
 PrepassBase
 PrepassFinal
 Vertex、VertexLMRGBM、VertexLM
+
+I、RequireOptions :SoftVegetation 用于指定当满足条件时才渲染该Pass,它的值是一个由空格分隔的字符串。目前Unity支持SoftVegetation
 
 向前渲染：ForwardBase 和 ForwardAdd
 #pragma multi_compile_fwdbase     （光照纹理 环境光 只发光 阴影）      
@@ -211,9 +216,7 @@ texCUBEproj	texCUBEproj(s, t)	Cube texture lookup with projective divide.
 transpose	transpose(m)	Returns the transpose of the matrix m.
 trunc	trunc(x)	Truncates floating-point value(s) to integer value(s)
 
---
-
--- 笔记---------------------------------------
+------------------------------------笔记---------------------------------------
 基础光照模型 : 自发光(emissive) + 环境光(ambient)  + 漫反射(diffuse) + 高亮反射(specular)
 
 漫反射(diffuse)   n 法线  l 入射光线
@@ -236,6 +239,3 @@ F_empricial(v,n)= max(0,min(1,bias+scale*(1-v*n)^power));
 USING_DIRECTIONAL_LIGHT
 #if defined (POINT)
 #elif defined (SPOT)
-
-
-
