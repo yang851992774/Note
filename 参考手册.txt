@@ -18,6 +18,7 @@ float3x3 rotation= float3x3(v.tangent.xyz,binormal,v.normal);
 ZWrite On | Off  深度写入
 Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
 ColorMask RGB |  A | 0 |其他R、G、B、A任意组合   ColorMask 用于设置颜色通道的写掩码（writeMask） 当 设为0 意味着改Pass 不写入任何颜色通道既不输出任何颜色,这种Pass 只写入深度缓存即可  
+ZTest Less | Greater | LEqual | GEqual | Equal | NotEqual | Always 设置深度测试时使用的函数
 
 Blend Off                                                关闭混合
 Blend SrcFactor DstFactor								开启混合。并设置混合因子，源颜色（该片元产生的颜色）*SrcFactor + 目标颜色（已经存在的颜色缓存颜色） * DesFactor
@@ -46,10 +47,8 @@ Blend SrcAlpha OneMinusSrcAlpha    正常 透明度混合
 Blend OneMinusDstColor  One        柔和相加
 Blend DstColor One                 //正片叠底
 Blend DstColor SrcColor             两倍叠加          
-
 BlendOp Min         变暗
 Blend One One       When using Min operation, these factors are ignored
-
 BlendOp Max			变亮
 Blend One One              When using Max operation, these factors are ignored
 
@@ -239,3 +238,6 @@ F_empricial(v,n)= max(0,min(1,bias+scale*(1-v*n)^power));
 USING_DIRECTIONAL_LIGHT
 #if defined (POINT)
 #elif defined (SPOT)
+
+
+
