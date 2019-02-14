@@ -14,6 +14,7 @@ TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下
 float3 binormal = cross(normalize(v.normal),normalize(v.tangent.xyz)) * v.tangent.w; 
 float3x3 rotation= float3x3(v.tangent.xyz,binormal,v.normal);
 
+Int Float Range(min,max),Color Vector 2D Cube 3D
 ---------------------------状态设置-----------------------------------------
 ZWrite On | Off  深度写入
 Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
