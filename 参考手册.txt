@@ -216,6 +216,8 @@ transpose	transpose(m)	Returns the transpose of the matrix m.
 trunc	trunc(x)	Truncates floating-point value(s) to integer value(s)
 
 ------------------------------------笔记---------------------------------------
+正交矩阵：MM^t=M^tM = I  -->  M^t = M^-1
+
 基础光照模型 : 自发光(emissive) + 环境光(ambient)  + 漫反射(diffuse) + 高亮反射(specular)
 
 漫反射(diffuse)   n 法线  l 入射光线
