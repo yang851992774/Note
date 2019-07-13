@@ -248,5 +248,7 @@ USING_DIRECTIONAL_LIGHT
 #if defined (POINT)
 #elif defined (SPOT)
 
+yann
+
 
 
