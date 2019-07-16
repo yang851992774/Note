@@ -18,5 +18,15 @@
         eg2、a和b间的夹角θ                    
                 θ = acccos(a.b/(|a||b|))
 
+@3、Vector3 函数
+        区别：
+            MoveTowards(Vector3 current, Vector3 target, float maxDistanceDelta)
+                当前值current移向目标target,maxDistanceDelta就是每次移动的最大长度,返回值是当current值加上maxDistanceDelta的值，如果这个值超过了target，返回的就是target的值
+            Lerp(Vector3 a, Vector3 b, float t))
+                t=0， 返回值是a，当t=1，返回值是b。同理，t=0.1时是a到b的10%。t就代表了a到b的百分比
+            Slerp(Vector3 a, Vector3 b, float t)
+                球形插值,这里球形插值与线性插值不同的地方在于，它将Vectors视为方向而不再是点。返回的{[向量方向]}，它的角度是根据a和b的角度插值，而它的长度是根据a和b的长度插值。
+
+@4、Quaternion  四元素
 
 
