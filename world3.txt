@@ -1,0 +1,8 @@
+
+调用ChangeActionStatus 切换状态的地方
+1、初始化DataActionGroup 9999
+2、执行中断 InterruptAgent.DoInterrupt 
+3、正常状态结束，连接到[默认连接状态]  StateAgent.ProcessActionFinish  idel= 1000
+4、移动时候切换到动作状态  PathMoveAgent.Move                  1300  1010
+5、AI 执行 AIAgent.ExecuteActionAttack  3700 3701
+6、处理击中的状态切换 StateAgent.CheckHitActionChange
