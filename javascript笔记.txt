@@ -1,0 +1,53 @@
+1、js中的this指向问题。
+    它是JS关键字，在JS中具有特殊意义，代表一个空间地址；this是执行的主体，谁执行的这个函数谁就是this；
+
+    a.函数调用模式：当一个函数并非一个对象的属性时，那么它就是被当做函数来调用的。在此种模式下，this被绑定为全局对象，在浏览器环境下就是window对象
+        function(){
+            console.log(this);  //this指向window
+        }
+    b.方法调用模式：当函数被保存为一个对象的属性时，它就可称为这个对象的方法。当一个方法被调用时，this被绑定到这个对象上。如果调用表达式包含一个提取属性的动作（. 或 []），那么它被称为方法调用
+        var o={
+            name:"hello";
+            sayName:function(){
+                console.log(this.name);  // this = o 指向当前对象
+            }            
+        }
+        o.sayName();
+    c.构造函数调用模式:this 指向新创建的对象
+        function Fc(){
+            this.name = "hello"
+        }
+        var f = new Fn();
+        console.log(f.name)
+    d.apply()  call() 调用会改变this 的指向
+
+2、js中call()和apply()方法的区别
+    相同点：call()和apply()方法的相同点就是这两个方法的作用是一样的。都是在特定的作用域中调用函数，等于设置函数体内this对象的值，以扩充函数赖以运行的作用域
+    不同点：参数接收方式不同，
+
+    Function.call(obj[, param1[, param2[, [,...paramN]]]]);
+
+
+
+    Function.apply(obj[, argArray]);    
+    People.apply(this, [name, age]);
+    People.apply(this, arguments);
+
+3、js  __proto__  和 prototype  constructor
+   function B(){}
+   var b = new B();
+   a、声明一个函数实际上是对Object.prototype 的实例化。
+   b、对象分为：1、普通对象，2、函数对象
+   c、对象 __proto__  constructor 每个对象都有
+   d、函数 prototype 每个函数都有，自身也是一个Object.prototype的实例，所有  __proto__ 指的是Object.prototype
+
+   对象b 有一个 __proto__ 指向其构造函数B的prototype,B实际也是Object.prototype 的一个实例，所有B的__proto__ 指的是Object.prototype
+
+
+4、var let const
+    var 定义变量 没有快作用域的概念，可以跨块，不能跨域。
+    let 变量定义，只能块作用域访问，不能跨块和跨函数作用域。
+    const用来定义常量，试用前必须初始化，只能在块作用域访问，而且不能修改。
+
+    js 有全局作用域，函数作用域，  块作用域（ES6 新增块作用域）
+    
