@@ -1,0 +1,4 @@
+性能优化及其指标：
+    1、FPS  (Frame Per Second) 每秒传输帧数   eg  60 16   帧数-每帧渲染所消耗的时间，注意FPS(Canvas/WebGL)
+    2、Sprite  所有节点的层级个数，影响遍历，越小越好
+    3、DrawCall

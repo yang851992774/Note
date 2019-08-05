@@ -1,0 +1,103 @@
+
+
+
+Facade
+      mode   注册中介者  +|-|find|has Proxy_Ref
+      view   注册代理    +|-|find|has Mediator_Ref
+      ctrl   注册命令    +|-|find|has Commond_Ref
+                        notifyObservers/sendNotification
+
+Model       +|-|find|has Proxy_Ref
+            -proxyMap<string(Proxy_Name),Proxy_Ref>
+
+ 
+Controller  +|-|find|has Commond_Ref
+            -view
+            -commandMap<string(Notification_Name),Commond_Ref>             
+            +executeCommand(Notification)  --command.execute(notification);
+            +registerCommand(notificationName, commandClassRef)  --this.view.registerObserver(notificationName, new puremvc.Observer(t.executeCommand, t));
+
+
+View       +|-|find|has Mediator_Ref
+           -mediatorMap<string,Mediator_Ref>    
+           -observerMap<string,List<Observer>>
+           +-Observer notifyObservers
+           registerMediator(mediator)  中介者感兴趣指令监听主题
+                        var interests = mediator.listNotificationInterests();
+                        var observer = new puremvc.Observer(mediator.handleNotification, mediator);                        
+                        for (var i = 0; i < len; i++)
+                              t.registerObserver(interests[i], observer);
+
+
+Notification   name  body  type
+
+Observer  -method,methodOwn
+          notifyObserver()   this.getNotifyMethod().call(this.getNotifyContext(), notification); 类似反射
+      
+
+Mediator 
+      -GUIWrapper
+      -mediatorName
+      -viewComponent
+      onRegister()/onRemove()
+      listNotificationInterests():Array<string>
+      handleNotification(notification: puremvc.INotification) 处理通知
+
+Proxy
+      -proxyName
+      -data
+      onRegister()/onRemove()
+
+
+GUIWrapper  
+         - _urls  图集
+         - _uiUrl 场景路径
+         - _uiInstance  场景ui实例
+         - _uiCalls:Dictionary 
+         - _dispatch:EventDispatcher
+         +open() 先加载图集 _urls，回掉成功后 onAssetLoaded 
+         -onAssetLoaded() 加载scene 成功回掉后 constructorUi
+         +constructorUi(instance<界面的ui组件>)  重写/onOpened/onClosed 界面统一初始化  -> Laya.Scene.open(this._uiUrl, this._isMutex);
+         +registerUrls()  +registerUrlsComplex() +on() +once() 
+         +close()
+         +onOpened() ------onScreenScale()  onGuiOpened() _uiInstance.onGuiOpened() ScreenManager.registerScreenScale()
+         +onClosed()        ScreenManager.removeScreenScale(this)    _uiInstance.onGuiClosed()
+         +onScreenScale()  ----recursiveCall()
+         +recursiveCall()
+
+
+SdkManager
+      -channel
+ChannelBase
+
+Utils
+
+
+ConfigManager  读取Res配置
+Environment  客户端配置
+LoggerManager  Logger 日志系统
+ScreenManager   适配 屏幕适配规则
+一、竖屏适配
+@1、获取可视化宽高，Laya.Browser.width   Laya.Browser.height  -> ratio=w/h 得到可视化界面的宽高比
+@2、固定屏幕设计高1280不变，根据与可视化宽高的比例，计算出屏幕宽screenH = 1280,  screenW = ratio * 1280;,并且设置舞
+    台的size, Laya.stage.size(targetW, targetH);  横、竖居中。ALIGN_MIDDLE   ALIGN_CENTER。
+    这一步主要计算stage的size。
+@3、UI固定设计宽720，scale = screenW/minWidth;
+    scale<= 1 :  uiWidth = 720, 根据屏幕的宽高比 计算出uiHeight = minWidth * (screenH / screenW)
+    设置ui的缩放(scale)，然后设置ui的宽高(uiWidth,uiHeight) 
+    scale>1  scale =1,屏幕宽高=ui宽高
+
+
+StorageManager  玩家偏好
+
+Launcher 启动类初始化
+
+TimeHelper  时间工具类
+StringTool  字符串工具类
+MathTool    数学工具类
+Dictionary  
+
+
+
+
+
