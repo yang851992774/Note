@@ -266,10 +266,22 @@ Color Vector float4 half4 fixed4   float3 half3 fixed3   float2 half2 fixed2
 2D           sampler2D
 Cube         samplerCube
 3D           sampler3D
-4、cg基本数据类型： bool/float/half/fixed/int/sampler
-5、操作符：   ?: 、 &&、 ||、 !   
-6、Swizzles操作 pos为4维度向量：  pos.wzyx (颠倒顺序，随意组合)、  pos.yz(颠倒顺序，随意组合)  、 pos.yzz (重复z 分量)，pos.rgba(xyzw和rgba只能取一种随意组合)，当pos为三维，不能取pos.w,
-7、宏定义:  #define MACROFL XXX
+4、cg基本数据类型： bool/float/half/fixed/int/sampler/ float(2|3|4)/ float(nxn)
+矩阵  float2x2 M2x2={{1,1},{0,0}}   取数组用角标  float2 f2= M2x2[0]
+数组  float arr[4] = {1,0.5,0.5,1}  取数组用角标  float f1 = arr[0]
+结构体 struct v2f{
+    //容纳所有基本的类型
+};
+使用结构体：v2f o; 
+5、流程控制：
+if...else 
+while
+do...while
+for 
+switch case goto 保留关键字，但不被支持
+6、操作符：   ?: 、 &&、 ||、 !   >  < = 等基本操作符
+7、向量和Swizzles操作 pos为4维度向量：  pos.wzyx (颠倒顺序，随意组合)、  pos.yz(颠倒顺序，随意组合)  、 pos.yzz (重复z 分量)，pos.rgba(xyzw和rgba只能取一种随意组合)，当pos为三维，不能取pos.w,
+8、宏定义:  #define MACROFL XXX
 
 
 
