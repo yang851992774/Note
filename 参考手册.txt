@@ -14,13 +14,6 @@ TANGENT_SPACE_ROTATION         模型空间 -》法线空间 预编译成下
 float3 binormal = cross(normalize(v.normal),normalize(v.tangent.xyz)) * v.tangent.w; 
 float3x3 rotation= float3x3(v.tangent.xyz,binormal,v.normal);
 
--ShaderLab属性类型-------------CG变量类型-----------匹配---------------------------------------
-Int 
-Float Range(min,max) float half fixed
-Color Vector float4 half4 fixed4
-2D           sampler2D
-Cube         samplerCube
-3D           sampler3D
 ---------------------------状态设置-----------------------------------------
 ZWrite On | Off  深度写入
 Cull Back|Front|Off  1、默认  Back  剔除背对摄像机的渲染图元   2、Fornt 剔除正对对摄像机的渲染图元  3、关闭剔除（需要渲染的图元增加，影响效率）
@@ -248,7 +241,39 @@ USING_DIRECTIONAL_LIGHT
 #if defined (POINT)
 #elif defined (SPOT)
 
-yann
+
+------------------------------------cg语法---------------------------------------
+1、输入输出
+void vert(in float2 objPos:POSITION,out float4 pos:POSITION,out float4 col:COLOR){
+    pos = float4(objPos,0,1);
+    col = float4(0,0,1,1);
+}
+void frag(inout float4 col:COLOR){
+    //col 在vert 已经被输出，这里输入被接收，又是输出颜色，也可以col重新被赋值覆盖掉。
+}
+关键词： in   输入
+关键词： out   输出
+关键词： inout   输入输出
+
+2、Cg profile 定义了“被特定图形硬件或API所支持的Cg语言子集”。不同图形硬件对应不同图形功能子集
+cg全部是值传递，不支持指针。有绑定语言，#progma target 2.0/3.0/4.0/5.0    default = 2.0
+
+3、ShaderLab属性类型
+Bool
+Int 
+Float Range(min,max) float half fixed
+Color Vector float4 half4 fixed4   float3 half3 fixed3   float2 half2 fixed2
+2D           sampler2D
+Cube         samplerCube
+3D           sampler3D
+4、cg基本数据类型： bool/float/half/fixed/int/sampler
+5、操作符：   ?: 、 &&、 ||、 !   
+6、Swizzles操作 pos为4维度向量：  pos.wzyx (颠倒顺序，随意组合)、  pos.yz(颠倒顺序，随意组合)  、 pos.yzz (重复z 分量)，pos.rgba(xyzw和rgba只能取一种随意组合)，当pos为三维，不能取pos.w,
+7、宏定义:  #define MACROFL XXX
+
+
+
+
 
 
 
