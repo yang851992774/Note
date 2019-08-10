@@ -304,7 +304,14 @@ switch case goto 保留关键字，但不被支持
 
 
 ---------------------------------------------------------GLSL--------------------------------------------------------------
-https://blog.csdn.net/qjh5606/article/details/82592207
+https://github.com/wshxbqq/GLSL-Card
+1、变量限定符：要注意全局变量限制符只能为 const、attribute、uniform和varying中的一个.不可复合
+    const      声明变量或者函数参数为只读类型
+    attribute  全局只读只能在vertex shader使用 （一般attribute变量用来放置程序传递来的模型顶点,法线,颜色,纹理等数据它可以访问数据缓冲区 ）
+    uniform    全局只读在整个shader中使用      （一般我们使用uniform变量来放置外部程序传递来的环境数据(如点光源位置,模型的变换矩阵等等）
+    varying    vertex shader -> fragment shader 之间的信使，一般只能在vertex中修改，在fragment中使用，但是不能修改
+    
+glsl标准函数库 ：通用函数/角度&三角函数/指数函数/几何函数/矩阵函数/向量函数/纹理查询函数
 
    
 
