@@ -21,17 +21,46 @@
         console.log(f.name)
     d.apply()  call() 调用会改变this 的指向
 
-2、js中call()和apply()方法的区别
+2、js中call()和apply()、bind() 方法的区别 
     相同点：call()和apply()方法的相同点就是这两个方法的作用是一样的。都是在特定的作用域中调用函数，等于设置函数体内this对象的值，以扩充函数赖以运行的作用域
     不同点：参数接收方式不同，
 
     Function.call(obj[, param1[, param2[, [,...paramN]]]]);
-
-
-
     Function.apply(obj[, argArray]);    
+    Function.bind(obj[, param1[, param2[, [,...paramN]]]])();   bind 会创建新的绑定函数    改变上下文环境之后并非立即执行
+
     People.apply(this, [name, age]);
     People.apply(this, arguments);
+eg:
+var array1 = [12 , "foo" , {name:"Joe"} , -2458]; 
+var array2 = ["Doe" , 555 , 100]; 
+Array.prototype.push.apply(array1, array2); 
+// array1 值为  [12 , "foo" , {name:"Joe"} , -2458 , "Doe" , 555 , 100] 
+
+bind()方法主要就是将函数绑定到某个对象，bind()会创建一个函数，函数体内的this对象的值会被绑定到传入bind()中的第一个参数的值，例如：f.bind(obj)，实际上可以理解为obj.f()，这时f函数体内的this自然指向的是obj；
+call 和 apply 都是为了改变某个函数运行时的上下文（context）而存在的，换句话说，就是为了改变函数体内部 this 的指向。
+JavaScript 的一大特点是，函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念
+区别是，当你希望改变上下文环境之后并非立即执行，而是回调执行的时候，使用 bind() 方法。而 apply/call 则会立即执行函数。
+
+var obj = {
+    x: 81,
+};
+ 
+var foo = {
+    getX: function() {
+        return this.x;
+    }
+}
+ 
+console.log(foo.getX.bind(obj)());  //81  但是注意看使用 bind() 方法的，他后面多了对括号。
+console.log(foo.getX.call(obj));    //81
+console.log(foo.getX.apply(obj));   //81
+
+总结:
+apply 、 call 、bind 三者都是用来改变函数的this对象的指向的；
+apply 、 call 、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；
+apply 、 call 、bind 三者都可以利用后续参数传参；
+bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。
 
 3、js  __proto__  和 prototype  constructor
    function B(){}

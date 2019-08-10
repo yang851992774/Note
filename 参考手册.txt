@@ -1,3 +1,8 @@
+开发商     shader语言     引擎使用
+OpenGL    GLSL            LAYA/Unity(-force-opengl)/UE4
+DirectX   HLSL            Unity
+NVLDIA    CG              Unity          
+
 -- 变量-----------------------------------
 _LightColor0                   灯光颜色
 _WorldSpaceLightPos0            世界空间光源的位置
@@ -242,7 +247,7 @@ USING_DIRECTIONAL_LIGHT
 #elif defined (SPOT)
 
 
-------------------------------------cg语法---------------------------------------
+------------------------------------cg语法-----很多是语法和c语言相似--------------HLSL语法和cg语法很像--------------------
 1、输入输出
 void vert(in float2 objPos:POSITION,out float4 pos:POSITION,out float4 col:COLOR){
     pos = float4(objPos,0,1);
@@ -256,7 +261,7 @@ void frag(inout float4 col:COLOR){
 关键词： inout   输入输出
 
 2、Cg profile 定义了“被特定图形硬件或API所支持的Cg语言子集”。不同图形硬件对应不同图形功能子集
-cg全部是值传递，不支持指针。有绑定语言，#progma target 2.0/3.0/4.0/5.0    default = 2.0
+cg 全部是值传递，不支持指针。有绑定语言，#progma target 2.0/3.0/4.0/5.0    default = 2.0
 
 3、ShaderLab属性类型
 Bool
@@ -274,14 +279,35 @@ Cube         samplerCube
 };
 使用结构体：v2f o; 
 5、流程控制：
-if...else 
+if...else if...else
 while
 do...while
-for 
+for            cg语法有循环上限限制 < 1024
 switch case goto 保留关键字，但不被支持
 6、操作符：   ?: 、 &&、 ||、 !   >  < = 等基本操作符
 7、向量和Swizzles操作 pos为4维度向量：  pos.wzyx (颠倒顺序，随意组合)、  pos.yz(颠倒顺序，随意组合)  、 pos.yzz (重复z 分量)，pos.rgba(xyzw和rgba只能取一种随意组合)，当pos为三维，不能取pos.w,
 8、宏定义:  #define MACROFL XXX
+8、cg函数
+    调用函数需要先定义，或者在函数之前前向声明。 cg函数不支持指针，所有的参数都是值拷贝。但是可以用利用out关键词输出   前向声明：void Func(out float4 c);
+    cg数组也是值拷贝，float Func2(float arr[3]); 数组参数需要定义维度，维度必须清晰明确。传参的必须和维度相同的数组，
+    float Func2(float arr[3]){
+        float sum = 0;//试用前必须赋值
+        for(int i=0;i<arr.Length;i++){
+            sum+=arr[i];
+        }
+        return sum;
+    }
+    自定义/新建函数库：    sbin.cginc  放到和Unity cginc库相同目录下
+    引用函数库：    #include "sbin/sbin.cginc"
+    cg标准函数库 ：数学函数/几何函数/纹理函数/导数函数/调试函数  cg很多函数都有重载，例如length(v) 向量v维度不同  https://wenku.baidu.com/view/3a9db318fad6195f312ba675.html
+
+
+
+---------------------------------------------------------GLSL--------------------------------------------------------------
+https://blog.csdn.net/qjh5606/article/details/82592207
+
+   
+
 
 
 
