@@ -72,6 +72,44 @@ bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调�
 
    对象b 有一个 __proto__ 指向其构造函数B的prototype,B实际也是Object.prototype 的一个实例，所有B的__proto__ 指的是Object.prototype
 
+   所有的 JavaScript 对象都会从一个 prototype（原型对象）中继承属性和方法
+
+
+    function Foo(){}
+    let foo = new Foo();
+
+                                foo对象
+                                    |      
+                                    |              
+                                __proto__  
+                                    |
+                                    ↓
+                                Foo原型对象 ←-- prototype --- Foo(构造函数)         
+                                |           ---constructor--→      |
+                                |                                  |         
+                            __proto__                         __proto__
+                                |                                  |
+                                ↓                                  ↓
+      null ←-- __proto__ -- Object原型对象                      Function原型对象 ←-- prototype --- Function
+                            |             ↑                                     ---constructor--→
+                            |             |
+                        constructor prototype
+                            |             |                                
+                            ↓             |
+                                Object
+
+
+Object.assign(target,source1,source2,...)
+主要用于对象的合并，将源对象source的所有可枚举属性合并到目标对象target上,此方法只拷贝源对象的自身属性，不拷贝继承的属性。
+方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。同名属性会替换    
+Object.create(prototype[,propertiesObject])
+Object.defineProperties(obj,props)
+Object.keys(obj)
+Object.values()
+Object.entries()
+Object.hasOwnProperty()  
+判断对象自身属性中是否具有指定的属性 ,不会检查继承原型对象的方法和属性
+
 
 4、var let const
     var 定义变量 没有快作用域的概念，可以跨块，不能跨域。
@@ -92,6 +130,18 @@ bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调�
     使用注意：use strict 放在脚本第一行，则整个脚本都将以“严格模式”运行，如果语句不在第一行，整个脚本以“正常模式”运行，不同模式的代码文件合并成一个文件，需要注意
     (严格地说，只要前面不是产生实际运行结果的语句，"use strict"可以不在第一行，比如直接跟在一个空的分号后面)
     "use strict" 放在函数的第一行，则整个函数以"严格模式"运行。 
+
+
+
+
+二、正则表达式
+语法示例：   /runoob/i         /正则表达式主体/修饰符(可选)
+1、修饰符
+i	执行对大小写不敏感的匹配。
+g	执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
+m	执行多行匹配。
+
+
 
 
     

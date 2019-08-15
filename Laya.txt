@@ -1,4 +1,135 @@
-性能优化及其指标：
-    1、FPS  (Frame Per Second) 每秒传输帧数   eg  60 16   帧数-每帧渲染所消耗的时间，注意FPS(Canvas/WebGL)
-    2、Sprite  所有节点的层级个数，影响遍历，越小越好
-    3、DrawCall
+Laya 优化
+https://www.cnblogs.com/ixenos/p/10553571.html
+############性能参数标准：
+1、面数控制在3万面以下
+2、控制100 DrawCall以下
+3、内存：
+4、显存
+
+
+############性能优化：
+1、Sprite 层级结构不要过于太深。
+2、减少DrawCall
+      a、避免交叉渲染
+      b、cacheAs 使用
+      c、复用3D材质
+      d、合并网格（Laya对20个面以下的相同模型自动动态合并   材质相同的静态场景，LayaAir提供静态合并方法StaticBatchManager.combine()），可以大量减少DrawCall   
+         静态合批：预加载资源,该资源在Unity中已勾选Static后导出
+         动态合批：设置共享材质 boxSprite.meshRenderer.sharedMaterial = boxMat
+         
+############3D优化
+1、D模型数量控制，3D游戏的性能优化，不仅是程序的工作，美术也要有严格的制作标准。比如在美术制作资源的时候，不影响效果与功能需求的前提下，尽量合并模型减少数量。
+2、摄像机裁剪优化、对于大型的3D场景来说，模型的面数与材质非常多，但是远处的部分几乎是看不清楚，这时可以采用摄像机裁剪功能，
+将远处看不清的模型与材质不渲染，结合场景雾效的话，并不影响美术效果，却可以减少Sprite与DrawCall的数量
+###CPU优化
+1、减少A星寻路的调用
+2、对象池的使用 OnSpawn OnUnspawn
+3、每一帧里进行运算,根据玩法的不同，每一帧取出不同数量的怪。比如，怪物不多的时候取一两个，怪物多的时候取十个，剩下的怪在下一帧里再运算。随然显示效果会有所延迟，
+但是伤害等数值的飘出等效果，因为不是同时出来，反而会显的更自然。最关键的是，CPU消耗会得到降低。
+4、分阶段处理复杂界面，在游戏中会有大量复杂的界面，比如背包，当背包的数据很多的时候，如果第一次打开，就会创建大量的子对象，在创建大量对象的时候可能会卡，这时候界面
+可以按处理服务端数据一样，按每一帧的时间分阶段处理。这样背包打开的时候，就会感觉到界面上的子元素是一个个的出来，没有了卡顿现象。
+5、限制技能特效与飘字的数量
+############内存优化
+1、资源的释放，使用对象池不仅可以优化CPU，还可以减少对象创建时的内存消耗。
+2、对于不用的资源，我们一定要释放掉，但是如果一会还需要用，那就不要轻易释放，因为释放后重新加载也会消耗性能。所以要根据不同的资源和策略进行权衡
+3、资源释放规则、eg:比如说UI资源，当玩家打开之后，一定时间之内没有再次打开。那么就可以检查一下这个UI的资源没有被其它地方所使用，如果没有，那就可以移除掉
+如果UI上有动画，那么当UI界面被关闭的时候，没有其它界面在使用这个动画，也可以立即删除这个动画,像角色、技能动画、声音等，也都是和UI一样，一定时间之内没有再次使用，
+就可以检查是否在其它地方使用，如果没有，就可以立即删除。
+4、注意： 需要注意的是显示对象的内存清空可以使用destory()方法。该方法会真正从内存中释放并设置为null，但他并不清空显示对象所用到的资源
+5、释放资源：分别是手动释放的方法clearRes()与clearTextureRes()、资源管理器ResourceManager中将autoRelease=true，
+实现自动释放，只有在超出内存上限的时候，才会释放资源，并且被自动释放后，如果释放的资源还在被其它地方使用，那么有可能还会出现一边清一边用。造成闪屏的现象
+6、以前的clearRes()相比，clearTextureRes()方法只销毁了texture使用的图片资源，但会保留texture资源壳，在下次渲染的时候，发现texture使用的图片资源不存在，则会自动恢复图片资源用于显示。
+而clearRes会彻底销毁texture，导致不能再使用。另外，clearTextureRes()能确保立即销毁图片资源，不用担心销毁失败。而clearRes()则采用引用计数方式销毁，如果其他地方有资源引用，
+则资源无法被销毁
+7、如果是大图合集，无论是clearRes()还是clearTextureRes()，都无法销毁。如果想手动管理的资源，可以关闭自动大图合集的功能，或改变大图合集的规则。
+8、3D资源需要释放，只能是手动管理，使用despose()方法将资源从显存中移除。如果积累太多资源没有释放，可能会引起崩溃，所以开发者需要有随时将不用的资源移除的习惯
+9、图集的制作规则：
+比如原来的设计是138*305，由于显存里会自动把宽高填充到2的整数幂。所以在显存里就变成了256*512。如果进行等比缩放，把尺寸改为116*256，那么显存里就只有128*256。内存就减少到原来的4分之1
+10、不在显示区域里的对象不加载
+11、不在视觉焦点的，可适当缩小，游戏玩家的视觉焦角一般都集中主角上，对于不在视觉焦点区的，可以采用按比例缩小图片的实际尺寸，在游戏里还原到100%的尺寸。这种方式也可以减少内存的占用。具体的缩小比例，建议为：怪物、武器、翅膀可以缩放到67%，技能25%或50%。
+12、智能优化:LayaAir引擎将在2.0的版本中推出智能优化。主要功能是将大量的CacheAs静态缓存优化，由手动变成了引擎的自动优化
+13、分帧加载优化：
+
+############2D优化
+
+
+############性能分析器
+1、Chrome性能分析器  性能分析器Profiles 
+
+############资源释放
+1、显存资源释放
+显存没有垃圾回收机制，若不重视游戏最终会崩溃
+2、内存资源释放
+单纯的销毁使用该网格的精灵，不对网格资源本身做处理，显存是不会有减少的，网格资源还是在显存中
+Sprite3D.destory
+MeshSprite3D.destory
+Mesh.destory,
+Material.destory,
+Texture2D.destory
+Scene3D、Sprite3D调用destroy()之后，引用的材质，纹理，网格并不会跟随一起销毁，需要使用Laya.loader.getRes(url:String)接口获取到需要销毁的资源，调用他的destroy()方法销毁
+这种方法是非常麻烦的。LayaAir2.0为了方便开发者，提供了Resource.destroyUnusedResources()接口统一销毁。
+
+
+代码参考
+1、分帧加载优化
+Laya.timer.frameLoop(1, this, onFrame);
+var curIdx:int = 0;
+var st:Number = 0;
+var tLimit:Number = 1000/Laya.timer.currFrame*0.25;//最大时间不超过一帧所需时间的25%（可调整）
+function onFrame():void{
+　　st = new Date().getTime();
+　　for(var i:int = curIdx; i < MAX_COUNT; i++){
+　　　　//到达时限时，余下script不在当前帧运行
+　　　　if(new Date().getTime() - st > tLitmit){
+　　　　　　curIdx = i;
+　　　　　　return;
+　　　　}
+　　　　doThings();
+　　}
+　　onComplete();
+}
+
+function doThings(){
+
+}
+
+function onComplete(){
+　　Laya.timer.clear(this, onFrame);
+}
+
+Laya资源:
+Resource -> ICreateResource, IDestroy
+static _idResourcesMap<uid,Resource>
+static _urlResourcesMap<[url][index],Resource>
+
+     AnimationTemplet   
+        Templet
+     AnimationClip
+     Avatar
+     BaseMaterial
+        XXXMaterial
+     Mesh
+     ShaderInstance
+     TerrainHeightData
+     TerrainRes
+     Bitmap
+        HtmlVideo
+        HTMLCanvas
+        HTMLImage
+        BaseTexture
+            RenderTexture
+            TextureCube
+            RenderTexture2D
+            Texture2D
+     BaseShader
+     TextTexture
+
+
+LoadManager          ResInfo extends EventDispatcher
+    static _resMap<url,ResInfo> 静态全局资源索引
+    _infoPool<ResInfo> [] ResInfo对象池
+    _resInfos[priority] = [] 5个线程优先级
+    _loaders<Loader>  资源加载对象的  对象池
+
+Loader   
+
