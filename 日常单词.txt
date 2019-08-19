@@ -1,0 +1,18 @@
+glow          v   发出微弱而稳定的光  因色彩浓烈而微微发光 （人体或脸）（运动后或激动）而发红；（因温暖、健康而）容光焕发；喜形于色
+indensity     n   强度；强烈；[电子] 亮度；紧张
+ambient       adj. 周围的；外界的；环绕的；产生轻松氛围的
+bidirectional adj.  双向的；双向作用的
+indirect       adj. 间接的；迂回的；非直截了当的
+reflectance    n    反射比
+distribution    vt. 分配；散布；分开；把…分类
+distribute     v   分配；散布；分开；把…分类
+primer         n. 初级读本；识字课本；原始物
+emissive        自发光
+ambient         环境光
+illumination       n. 照明；[光] 照度；启发；灯饰（需用复数）；阐明
+pixel      像素
+vertex
+fragment
+skew           adj. 偏的，歪斜的；偏态的；异面的
+
+
