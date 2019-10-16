@@ -99,6 +99,20 @@ Dictionary
 
 
 
+萌芽熊系统
+
+BuddingBearComponent ->ActiveMonoBehaviour
+      buddingBearIdleCtrl/buddingBearMoveCtrl/buddingBearTouchCtrl/buddingBearSlotCtrl
+BaseBearCtrl<T> 相当于萌芽熊代理管理
+      BuddingBearIdleCtrl  待机控制
+      BuddingBearMoveCtrl  移动控制
+      BuddingBearTouchCtrl  触碰控制
+      BuddingBearSlotCtrl  换装控制      
+
+
+
+
+
 
 
 

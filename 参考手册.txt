@@ -113,7 +113,9 @@ Range FloatValue , FloatValue       为linear的雾设定远近距离
 注意如果你使用片段程序，着色器雾设定仍然会被应用。如果平台没有对固定管线的雾功能支持，Unity会实时补上着色器以支持需要的雾模式。
 
 ##############复用通道Pass  UsePass
-UsePass "shader/name"         shader名称/通道名称    代码复用, 注意： 通道名字都是大写开头，因此UsePass必须使用大写开头的名字来书写索引
+UsePass "shader路径/NAME"         shader名称/通道名称    代码复用, 注意： 通道名字都是大写开头，因此UsePass必须使用大写开头的名字来书写索引
+注意：Unity  将所有的pass的Name转为大写，因此在UsePass 指令必须使用大写
+
 ##############特殊的通道类型     GrabPass     是一种特殊的通道类型 - 捕获物体所在位置的屏幕的内容并写入到一个纹理中。这个纹理能被用于后续的通道中完成一些高级图像特效
 GrabPass {} 能捕获当前屏幕的内容到一个纹理中。纹理能在后续通道中通过 _GrabTexture 进行访问。注意：这种形式的捕获通道将在每一个使用该通道的对象渲染过程中执行昂贵的屏幕捕获操作
 GrabPass { "TextureName" } 能捕获屏幕内容到一个纹理中，但只会在每帧中处理第一个使用给定纹理名的纹理的对象的渲染过程中产生捕获操作。纹理在未来的通道中可以通过给定的纹理名访问。
@@ -250,10 +252,23 @@ FallBack "Transparent/Cutout/VertexLit"
         c、脚本生成  Camera.RenderToCubemap        
 2、渲染纹理
 应用场景：Mirror  玻璃  
-3、程序纹理
+3、程序纹理  程序材质 Substance
 
+&&&&&&&&&&&&&&&&&&屏幕后期处理
+[ImageEffectOpaque]  //添加这个属性强制在所有不透明Pass 执行完毕后调用。
+OnRenderImage()  //默认在所有透明和不透明的Pass执行完毕后调用该方法
+Graphics.Bit(RenderTexture src,RenderTexture desc)
+屏幕后期处理作用
+1、调整屏幕亮度srcColor * _Brightness、
+2、饱和度  0.2125 * renderTex.r + 0.7154 * renderTex.g + 0.0721 * renderTex.b 、
+3、对比度  avgColor = fixed3(0.5, 0.5, 0.5)  和平均值对比
+4、边缘检测 、图像模糊/均值模糊、检测因子、高斯模糊            卷积（水平/竖直检测因子 ）模糊检测因子  Prewitt  Sobel  Roberts 模糊检测因子
+5、Bloom效果、运动模糊（混合连续帧） 
 
-
+############深度纹理-法线纹理
+camera.depthTextureMode=DepthTextureMode.Depth | DepthTextureMode.DepthNornals
+_CameraDepthTexture
+_CameraDepthNormalsTexture
 
 ------------------------------------笔记---------------------------------------
 正交矩阵：MM^t=M^tM = I  -->  M^t = M^-1
@@ -352,6 +367,39 @@ glsl标准函数库 ：通用函数/角度&三角函数/指数函数/几何函�
 
    
 
+#群主推荐：
+# 书籍推荐
+0. 数学知识
+  Mathematics for 3D Game Programming and Computer Graphics (Third Edition).pdf
+1. opengl 
+  Packt.OpenGL 4 Shading Language Cookbook.2Ed.2014.pdf
+2. 图形学
+  Real-Time Rendering, Third Edition.pdf
+3.游戏开发优化
+  Unity 5 Game Optimization.pdf
+
+# 大神blog 推荐
+  总入口：
+  http://iquilezles.org/www/index.htm
+  raymarching知识：
+  http://iquilezles.org/www/articles/raymarchingdf/raymarchingdf.htm
+  shader 教程
+  https://thebookofshaders.com/
+
+# 数学工具推荐
+  3D数学建模
+  https://academo.org/demos/3d-surface-plotter/
+  2D数学建模
+  https://www.desmos.com/calculator
+  shader 建模专用
+  http://www.iquilezles.org/apps/graphtoy/
+
+# shader 网站推荐(高级)
+  https://www.shadertoy.com/
+  http://glslsandbox.com/?page=1
+
+
+  https://github.com/UnityTechnologies
 
 
 
