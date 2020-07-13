@@ -1,16 +1,16 @@
 #### 普通linux命令
 
-| 命令行     | 注释         | 参数                     |
-| ---------- | ------------ | ------------------------ |
-| cd /c/user | 进入文件夹   | /c/user                  |
-| cd ~       | 进入系统Root |                          |
-| ls         | 列出所有文件 | 显示文件不隐藏           |
-|            |              | -a 显示所有              |
-|            |              | -l 不隐藏文件显示详情    |
-|            |              | -al 显示所有文件显示详情 |
-|            |              |                          |
-|            |              |                          |
-|            |              |                          |
+| 命令行     | 注释           | 参数                     |
+| ---------- | -------------- | ------------------------ |
+| cd /c/user | 进入文件夹     | /c/user                  |
+| cd ~       | 进入系统Root   |                          |
+| ls         | 列出所有文件   | 显示文件不隐藏           |
+|            |                | -a 显示所有              |
+|            |                | -l 不隐藏文件显示详情    |
+|            |                | -al 显示所有文件显示详情 |
+| cd ~       | 进入用户文件夹 |                          |
+|            |                |                          |
+|            |                |                          |
 
 
 
@@ -101,3 +101,21 @@ $ git rm --cached [file]
 $ git mv [file-original] [file-renamed]
 ```
 
+
+
+
+
+配置git
+
+git config --global user.name “XXX”
+  ps：xxx代表你的用户名
+git config --global user.email "XXX@XXX.com"
+  ps：XXX输入邮箱
+ssh-keygen -t rsa -C "XXX@XXX.com"
+  ps：生成一个新的SSH密钥，一直按回车即可
+cd ~/.ssh
+  ps：去到.ssh指纹目录
+cat id_rsa.pub | clip
+  ps：拷贝指纹信息
+
+添加hashKey 
