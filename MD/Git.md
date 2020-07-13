@@ -16,27 +16,27 @@
 
 #### git相关命令
 
-|                     |                          |      |
-| ------------------- | ------------------------ | ---- |
-| git init            | 创建一个目录为git 仓库   |      |
-| git clone <url>     | 克隆仓库                 |      |
-| git status          | 查看哪些文件处于什么状态 |      |
-| git add             |                          |      |
-| git commit          | wq    q!   qa!           | -m   |
-| git restore         |                          |      |
-| git branch <name>   | 创建分支<name>           |      |
-| git branch -a       | 列出所有分支             |      |
-| git checkout <name> | 切换分支                 |      |
-|                     |                          |      |
-|                     |                          |      |
-|                     |                          |      |
-|                     |                          |      |
-|                     |                          |      |
-|                     |                          |      |
-|                     |                          |      |
-| git log             | 查看日志，按q 退出       |      |
-| git fetch           |                          |      |
-|                     |                          |      |
+|                        |                                |      |
+| ---------------------- | ------------------------------ | ---- |
+| git init               | 创建一个目录为git 仓库         |      |
+| git clone <url>        | 克隆仓库                       |      |
+| git status             | 查看哪些文件处于什么状态       |      |
+| git add                |                                |      |
+| git commit             | wq    q!   qa!                 | -m   |
+| git restore            |                                |      |
+| git branch <name>      | 创建分支<name>                 |      |
+| git branch -a          | 列出所有分支                   |      |
+| git checkout <name>    | 切换分支                       |      |
+| git merge <branchname> | 合并分支<branchname>到当前分支 |      |
+| git push               | 推送                           |      |
+|                        |                                |      |
+|                        |                                |      |
+|                        |                                |      |
+|                        |                                |      |
+|                        |                                |      |
+| git log                | 查看日志，按q 退出             |      |
+| git fetch              |                                |      |
+|                        |                                |      |
 
 
 
