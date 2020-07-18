@@ -36,7 +36,7 @@
 |                        |                                |      |
 | git log                | 查看日志，按q 退出             |      |
 | git fetch              |                                |      |
-|                        |                                |      |
+| git reset              | --soft/--mixed/--hard          |      |
 
 
 
