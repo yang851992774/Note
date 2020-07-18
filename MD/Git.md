@@ -36,7 +36,7 @@
 |                        |                                |      |
 | git log                | 查看日志，按q 退出             |      |
 | git fetch              |                                |      |
-|                        |                                |      |
+| git reset              | <none>/--soft/--mixed/--hard   |      |
 
 
 
@@ -131,4 +131,30 @@ cat id_rsa.pub | clip
 1. git fsck --lost-found       查看贮藏记录
 2. git show <id>                显示某一条贮藏的摘要
 3. git merge <id>              合并被删除的贮藏
+
+#### 几种撤销操作
+
+##### Repository->Index (也就是commit的撤销 )  
+
+git reset --soft HEAD^1   git reset --soft HEAD~1  git reset --soft HEAD~2
+
+解释：不删除工作空间改动代码，撤销commit，不撤销git add .
+
+##### Repository->Workspace(也就是commit 和 Add 两步骤的撤销 )  
+
+git reset --mixed HEAD^1   git reset --mixed HEAD~1  git reset --mixed HEAD~2
+
+解释：不删除工作空间改动代码，撤销commit，并且撤销git add . 操作
+
+##### Repository->Workspace(也就是commit 和 Add 两步骤的撤销，并且删除工作空间改动的代码 ) 
+
+git reset --hard HEAD^1   git reset --hard HEAD~1  git reset --hard HEAD~2
+
+解释：删除工作空间改动代码，撤销commit，撤销git add .  注意完成这个操作后，就恢复到了上一次的commit状态。真正的全部回滚到上个commit.
+
+
+
+HEAD^的意思是上一个版本，也可以写成HEAD~1,  如果你进行了2次commit，想都撤回，可以使用HEAD~2
+
+
 
