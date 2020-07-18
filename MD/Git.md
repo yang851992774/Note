@@ -29,8 +29,8 @@
 | git checkout <name>    | 切换分支                       |      |
 | git merge <branchname> | 合并分支<branchname>到当前分支 |      |
 | git push               | 推送                           |      |
-|                        |                                |      |
-|                        |                                |      |
+| git stash              |                                |      |
+| git stash list         |                                |      |
 |                        |                                |      |
 |                        |                                |      |
 |                        |                                |      |
