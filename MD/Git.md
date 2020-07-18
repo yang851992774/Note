@@ -119,3 +119,16 @@ cat id_rsa.pub | clip
   ps：拷贝指纹信息
 
 添加hashKey 
+
+
+
+
+
+### 问题集合
+
+#### 贮藏被不小心删除恢复贮藏
+
+1. git fsck --lost-found       查看贮藏记录
+2. git show <id>                显示某一条贮藏的摘要
+3. git merge <id>              合并被删除的贮藏
+
