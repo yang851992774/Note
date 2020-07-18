@@ -132,6 +132,8 @@ cat id_rsa.pub | clip
 2. git show <id>                显示某一条贮藏的摘要
 3. git merge <id>              合并被删除的贮藏
 
+
+
 #### 几种撤销操作
 
 ##### Repository->Index (也就是commit的撤销 )  
@@ -157,4 +159,10 @@ git reset --hard HEAD^1   git reset --hard HEAD~1  git reset --hard HEAD~2
 HEAD^的意思是上一个版本，也可以写成HEAD~1,  如果你进行了2次commit，想都撤回，可以使用HEAD~2
 
 
+
+#### 合并提交操作
+
+当git push 之后，发现还有部分内容还没有提交完成，或者遗留提交了部分。
+
+我们一般的做法是直接commit,再次push。其实这步操作完全可以合并到一个提交中去。
 
