@@ -168,3 +168,33 @@ HEAD^的意思是上一个版本，也可以写成HEAD~1,  如果你进行了2�
 
 git commit -amend
 
+
+
+#### 4、多人项目如与主干合并
+
+git add/ git commit /git push    一般都在自己feature分支开发，提交所有代码至当前分支。
+
+git checkout master
+
+git pull
+
+git checkout feature
+
+git merge master        ->解决冲突
+
+git push                        ->提交合并主干的内容至当前远端分支
+
+git checkout master
+
+git merge feature        ->解决冲突
+
+git push                       -> 提交合并分支后的内容至远端
+
+git checkout feature   ->切换分支继续干活
+
+到目前为止，所自己分支的内容和主干的内容会保持完全一样的版本。形成一个闭环
+
+
+
+
+
