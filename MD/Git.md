@@ -16,27 +16,37 @@
 
 #### git相关命令
 
-|                        |                                |      |
-| ---------------------- | ------------------------------ | ---- |
-| git init               | 创建一个目录为git 仓库         |      |
-| git clone <url>        | 克隆仓库                       |      |
-| git status             | 查看哪些文件处于什么状态       |      |
-| git add                |                                |      |
-| git commit             | wq    q!   qa!                 | -m   |
-| git restore            |                                |      |
-| git branch <name>      | 创建分支<name>                 |      |
-| git branch -a          | 列出所有分支                   |      |
-| git checkout <name>    | 切换分支                       |      |
-| git merge <branchname> | 合并分支<branchname>到当前分支 |      |
-| git push               | 推送                           |      |
-| git stash              |                                |      |
-| git stash list         |                                |      |
-|                        |                                |      |
-|                        |                                |      |
-|                        |                                |      |
-| git log                | 查看日志，按q 退出             |      |
-| git fetch              |                                |      |
-| git reset              | <none>/--soft/--mixed/--hard   |      |
+|                                     |                                    |      |
+| ----------------------------------- | ---------------------------------- | ---- |
+| git init                            | 创建一个目录为git 仓库             |      |
+| git clone <url>                     | 克隆仓库                           |      |
+| git status                          | 查看哪些文件处于什么状态           |      |
+| git add                             |                                    |      |
+| git commit                          | wq    q!   qa!                     | -m   |
+| git restore                         |                                    |      |
+| git branch <name>                   | 创建分支<name>                     |      |
+| git branch -a                       | 列出所有分支                       |      |
+| git checkout <name>                 | 切换分支                           |      |
+| git merge <branchname>              | 合并分支<branchname>到当前分支     |      |
+| git push <origin>  <local>:<remote> | 推送分支                           |      |
+| git stash                           | 将当前工作贮藏                     |      |
+| git stash list                      | 查看贮藏的列表                     |      |
+| git stash apply                     | 恢复贮藏中的工作内容               |      |
+| git stash drop                      | 删除此条贮藏                       |      |
+| git stash pop                       | 恢复贮藏中的工作内容并删除此条贮藏 |      |
+| git stash clear                     | 清空Git栈                          |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+|                                     |                                    |      |
+| git log                             | 查看日志，按q 退出                 |      |
+| git reset                           | <none>/--soft/--mixed/--hard       |      |
+|                                     |                                    |      |
 
 
 
@@ -156,7 +166,7 @@ git reset --hard HEAD^1   git reset --hard HEAD~1  git reset --hard HEAD~2
 
 
 
-HEAD^的意思是上一个版本，也可以写成HEAD~1,  如果你进行了2次commit，想都撤回，可以使用HEAD~2
+HEAD^的意思是上一个版本，也可以写成HEAD~1,  如果你进行了2次commit，想都撤回，可以使用HEAD~2。如果省略HEAD~1,则是默认回滚到上个提交。
 
 
 
@@ -172,27 +182,45 @@ git commit -amend
 
 #### 4、多人项目如与主干合并
 
-git add/ git commit /git push    一般都在自己feature分支开发，提交所有代码至当前分支。
+**（feature）**git add/ git commit /git push    一般都在自己feature分支开发，提交所有代码至当前分支。
 
-git checkout master
+**(feature）**git checkout master
 
-git pull
+ **(master) **  git pull
 
-git checkout feature
+ **(master) ** git checkout feature
 
-git merge master        ->解决冲突
+**(feature）**git merge master        ->解决冲突
 
-git push                        ->提交合并主干的内容至当前远端分支
+**(feature）**git push                        ->提交合并主干的内容至当前远端分支
 
-git checkout master
+**(feature）**git checkout master
 
-git merge feature        ->解决冲突
+**(master) **git merge feature        ->解决冲突
 
-git push                       -> 提交合并分支后的内容至远端
+**(master) **git push                       -> 提交合并分支后的内容至远端
 
-git checkout feature   ->切换分支继续干活
+**(master) **git checkout feature   ->切换分支继续干活
 
 到目前为止，所自己分支的内容和主干的内容会保持完全一样的版本。形成一个闭环
+
+
+
+#### 5、彻底回滚某一个版本
+
+git reset --hard [HEAD^1]       ->回滚至上一个提交
+
+git pull origin master              ->拉取最新版本
+
+
+
+#### 6、贮藏与清理的作用
+
+
+
+当我在feature1开发有一段时间后，所有的东西都是一个混乱状态，这个时候需要切换到feature2做一点点事情，问题是现在不想因为过一会回到这点而做了一半的工作创建一次提交。这种场景用到贮藏。
+
+
 
 
 
