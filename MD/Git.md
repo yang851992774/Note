@@ -233,6 +233,12 @@ alias g='git'
 
 #### 8、测试恢复删除的分支
 
+git log -g      查看记录，找到你需要恢复的最后一次commit 的hash值
+
+git branch <recover_branch_name>  <hashid>
+
+
+
 
 
 
