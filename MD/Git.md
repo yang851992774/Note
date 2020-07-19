@@ -16,37 +16,37 @@
 
 #### git相关命令
 
-|                                     |                                    |           |
-| ----------------------------------- | ---------------------------------- | --------- |
-| git init                            | 创建一个目录为git 仓库             |           |
-| git clone <url>                     | 克隆仓库                           |           |
-| git status                          | 查看哪些文件处于什么状态           |           |
-| git add                             |                                    |           |
-| git commit                          | wq    q!   qa!                     | -m        |
-| git restore                         |                                    |           |
-| git branch <name>                   | 创建分支<name>                     |           |
-| git branch                          | 列出所有分支                       | -a  \| -d |
-| git checkout <name>                 | 切换分支                           |           |
-| git merge <branchname>              | 合并分支<branchname>到当前分支     |           |
-| git push <origin>  <local>:<remote> | 推送分支                           |           |
-| git stash                           | 将当前工作贮藏                     |           |
-| git stash list                      | 查看贮藏的列表                     |           |
-| git stash apply                     | 恢复贮藏中的工作内容               |           |
-| git stash drop                      | 删除此条贮藏                       |           |
-| git stash pop                       | 恢复贮藏中的工作内容并删除此条贮藏 |           |
-| git stash clear                     | 清空Git栈                          |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-|                                     |                                    |           |
-| git log                             | 查看日志，按q 退出                 |           |
-| git reset                           | <none>/--soft/--mixed/--hard       |           |
-|                                     |                                    |           |
+|                                                  |                                    |           |
+| ------------------------------------------------ | ---------------------------------- | --------- |
+| git init                                         | 创建一个目录为git 仓库             |           |
+| git clone <url>                                  | 克隆仓库                           |           |
+| git status                                       | 查看哪些文件处于什么状态           |           |
+| git add                                          |                                    |           |
+| git commit                                       | wq    q!   qa!                     | -m  -a    |
+| git restore                                      |                                    |           |
+| git branch <name>                                | 创建分支<name>                     |           |
+| git branch                                       | 列出所有分支                       | -a  \| -d |
+| git checkout <name>                              | 切换分支                           |           |
+| git merge <branchname>                           | 合并分支<branchname>到当前分支     |           |
+| git push <origin>  <local>:<remote>              | 推送分支                           |           |
+| git stash                                        | 将当前工作贮藏                     |           |
+| git stash list                                   | 查看贮藏的列表                     |           |
+| git stash apply                                  | 恢复贮藏中的工作内容               |           |
+| git stash drop                                   | 删除此条贮藏                       |           |
+| git stash pop                                    | 恢复贮藏中的工作内容并删除此条贮藏 |           |
+| git stash clear                                  | 清空Git栈                          |           |
+|                                                  |                                    |           |
+|                                                  |                                    |           |
+|                                                  |                                    |           |
+|                                                  |                                    |           |
+|                                                  |                                    |           |
+|                                                  |                                    |           |
+|                                                  |                                    |           |
+|                                                  |                                    |           |
+| git log --graph --pretty=oneline --abbrev-commit |                                    |           |
+| git log                                          | 查看日志，按q 退出                 |           |
+| git reset                                        | <none>/--soft/--mixed/--hard       |           |
+|                                                  |                                    |           |
 
 
 
