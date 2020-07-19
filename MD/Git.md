@@ -16,37 +16,37 @@
 
 #### git相关命令
 
-|                                                  |                                    |           |
-| ------------------------------------------------ | ---------------------------------- | --------- |
-| git init                                         | 创建一个目录为git 仓库             |           |
-| git clone <url>                                  | 克隆仓库                           |           |
-| git status                                       | 查看哪些文件处于什么状态           |           |
-| git add                                          |                                    |           |
-| git commit                                       | wq    q!   qa!                     | -m  -a    |
-| git restore                                      |                                    |           |
-| git branch <name>                                | 创建分支<name>                     |           |
-| git branch                                       | 列出所有分支                       | -a  \| -d |
-| git checkout <name>                              | 切换分支                           |           |
-| git merge <branchname>                           | 合并分支<branchname>到当前分支     |           |
-| git push <origin>  <local>:<remote>              | 推送分支                           |           |
-| git stash                                        | 将当前工作贮藏                     |           |
-| git stash list                                   | 查看贮藏的列表                     |           |
-| git stash apply                                  | 恢复贮藏中的工作内容               |           |
-| git stash drop                                   | 删除此条贮藏                       |           |
-| git stash pop                                    | 恢复贮藏中的工作内容并删除此条贮藏 |           |
-| git stash clear                                  | 清空Git栈                          |           |
-|                                                  |                                    |           |
-|                                                  |                                    |           |
-|                                                  |                                    |           |
-|                                                  |                                    |           |
-|                                                  |                                    |           |
-|                                                  |                                    |           |
-|                                                  |                                    |           |
-|                                                  |                                    |           |
-| git log --graph --pretty=oneline --abbrev-commit |                                    |           |
-| git log                                          | 查看日志，按q 退出                 |           |
-| git reset                                        | <none>/--soft/--mixed/--hard       |           |
-|                                                  |                                    |           |
+|                                                  |                                    |                    |
+| ------------------------------------------------ | ---------------------------------- | ------------------ |
+| git init                                         | 创建一个目录为git 仓库             |                    |
+| git clone <url>                                  | 克隆仓库                           |                    |
+| git status                                       | 查看哪些文件处于什么状态           |                    |
+| git add                                          |                                    |                    |
+| git commit                                       | wq    q!   qa!                     | -m  -a             |
+| git restore                                      |                                    |                    |
+| git branch <name>                                | 创建分支<name>                     |                    |
+| git branch                                       | 列出所有分支                       | -a  \| -d          |
+| git checkout [-b] <name>                         | 切换分支                           | -b(创建并切换分支) |
+| git merge <branchname>                           | 合并分支<branchname>到当前分支     |                    |
+| git push <origin>  <local>:<remote>              | 推送分支                           |                    |
+| git stash                                        | 将当前工作贮藏                     |                    |
+| git stash list                                   | 查看贮藏的列表                     |                    |
+| git stash apply                                  | 恢复贮藏中的工作内容               |                    |
+| git stash drop                                   | 删除此条贮藏                       |                    |
+| git stash pop                                    | 恢复贮藏中的工作内容并删除此条贮藏 |                    |
+| git stash clear                                  | 清空Git栈                          |                    |
+|                                                  |                                    |                    |
+|                                                  |                                    |                    |
+|                                                  |                                    |                    |
+|                                                  |                                    |                    |
+|                                                  |                                    |                    |
+|                                                  |                                    |                    |
+|                                                  |                                    |                    |
+| git show <id>                                    |                                    |                    |
+| git log --graph --pretty=oneline --abbrev-commit |                                    |                    |
+| git log                                          | 查看日志，按q 退出                 |                    |
+| git reset                                        | <none>/--soft/--mixed/--hard       |                    |
+|                                                  |                                    |                    |
 
 
 
@@ -68,6 +68,8 @@ $ git init
 $ git init [project-name]
 # 下载一个项目和它的整个代码历史
 $ git clone [url]
+# add && commit所有信息
+$ git commit -a -m "info"
 ```
 
 
@@ -80,6 +82,7 @@ $ git config -e [--global]
 # 设置提交代码时的用户信息
 $ git config [--global] user.name "[name]"
 $ git config [--global] user.email "[email address]”
+
 
 git 修改当前的project的用户名的命令为：
 > git config user.name 你的目标用户名;
@@ -222,7 +225,13 @@ git pull origin master              ->拉取最新版本
 
 
 
-7、Git 123
+#### 7、git 命令别名
+
+alias g='git'
+
+
+
+
 
 
 
