@@ -114,10 +114,6 @@ $ git rm --cached [file]
 $ git mv [file-original] [file-renamed]
 ```
 
-
-
-
-
 配置git
 
 git config --global user.name “XXX”
@@ -241,7 +237,18 @@ git branch <recover_branch_name>  <hashid>
 
 
 
+git clean -f/-n/-df/-xf
+
+-n      是一次clean的演习, 告诉你哪些文件会被删除. 记住它不会真正地删除文件, 只是一个提醒。
+
+-f       删除当前目录下所有没有track过的文件. 它不会删除 .gitignore 文件里指定的文件夹和文件, 不管这些文件有没有被track过
 
 
 
+#### 9、重置到上次一模一样的状态
 
+工作目录和缓存区回到最近一次commit时候一摸一样的状态
+
+git reset --hard
+
+git clean -df
