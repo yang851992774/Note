@@ -205,6 +205,28 @@ git commit -amend
 
 
 
+#### 5、多人项目提交代码
+
+**（feature）**git pull 先拉取一下，看是否有冲突
+
+ 无冲突
+
+**（feature）**git add/ git commit /git push
+
+有冲突
+
+**（feature）**git add/ git commit
+
+git pull 先拉取一下,一定是可以拉取的解决冲突之后
+
+git commit / git push
+
+
+
+
+
+
+
 #### 5、彻底回滚某一个版本
 
 git reset --hard [HEAD^1]       ->回滚至上一个提交
