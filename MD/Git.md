@@ -274,3 +274,40 @@ git clean -f/-n/-df/-xf
 git reset --hard
 
 git clean -df
+
+
+
+
+
+--创建子树
+
+
+
+```
+
+https://blog.csdn.net/lupengfei1009/article/details/103099820
+https://segmentfault.com/a/1190000012002151
+
+tip:
+1、用那个版本合并那个版本 feature/100
+2、GBFramework 子树添加时候的文件夹路径必须不存在，否则会ad d
+git subtree add --prefix=Tower/Assets/GBFramework git@gitlab.corp.cootek.com:lunar/gb_game/gb_framework.git feature/100 --squash
+
+git subtree add   --prefix=<prefix> <commit>
+git subtree add   --prefix=<prefix> <repository> <ref>
+git subtree pull  --prefix=<prefix> <repository> <ref>
+git subtree push  --prefix=<prefix> <repository> <ref>
+git subtree merge --prefix=<prefix> <commit>
+git subtree split --prefix=<prefix> [OPTIONS] [<commit>]
+
+git subtree pull --prefix=Lick/Assets/GBFramework git@gitlab.corp.cootek.com:lunar/gb_game/gb_framework.git feature/100 --squash
+
+--拉取子项目。解决需要把项目的所有修改解决掉，才能拉取成功
+Working tree has midification. Cannot add.
+
+1、
+git subtree add --prefix=GoldMiner git@gitlab.corp.cootek.com:lunar/gb_game/gbgamebase.git develop --squash
+git subtree add --prefix=GoldMiner/Assets/GBFramework git@gitlab.corp.cootek.com:lunar/gb_game/gb_framework.git feature/100 --squash
+
+```
+
