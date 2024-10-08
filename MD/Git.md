@@ -14,37 +14,37 @@
 
 #### git 相关命令
 
-|                                                  |                                    |                    |
-| ------------------------------------------------ | ---------------------------------- | ------------------ |
-| git init                                         | 创建一个目录为 git 仓库            |                    |
-| git clone <url>                                  | 克隆仓库                           |                    |
-| git status                                       | 查看哪些文件处于什么状态           |                    |
-| git add                                          |                                    |                    |
-| git commit                                       | wq q! qa!                          | -m -a              |
-| git restore                                      |                                    |                    |
-| git branch <name>                                | 创建分支<name>                     |                    |
-| git branch                                       | 列出所有分支                       | -a \| -d           |
-| git checkout [-b] <name>                         | 切换分支                           | -b(创建并切换分支) |
-| git merge <branchname>                           | 合并分支<branchname>到当前分支     |                    |
-| git push <origin> <local>:<remote>               | 推送分支                           |                    |
-| git stash                                        | 将当前工作贮藏                     |                    |
-| git stash list                                   | 查看贮藏的列表                     |                    |
-| git stash apply                                  | 恢复贮藏中的工作内容               |                    |
-| git stash drop                                   | 删除此条贮藏                       |                    |
-| git stash pop                                    | 恢复贮藏中的工作内容并删除此条贮藏 |                    |
-| git stash clear                                  | 清空 Git 栈                        |                    |
-|                                                  |                                    |                    |
-|                                                  |                                    |                    |
-|                                                  |                                    |                    |
-|                                                  |                                    |                    |
-|                                                  |                                    |                    |
-|                                                  |                                    |                    |
-|                                                  |                                    |                    |
-| git show <id>                                    |                                    |                    |
-| git log --graph --pretty=oneline --abbrev-commit |                                    |                    |
-| git log                                          | 查看日志，按 q 退出                |                    |
-| git reset                                        | <none>/--soft/--mixed/--hard       |                    |
-|                                                  |                                    |                    |
+|                                                  |                                                              |                    |
+| ------------------------------------------------ | ------------------------------------------------------------ | ------------------ |
+| git init                                         | 创建一个目录为 git 仓库                                      |                    |
+| git clone <url>                                  | 克隆仓库                                                     |                    |
+| git status                                       | 查看哪些文件处于什么状态                                     |                    |
+| git add                                          | Git 的add命令一般有三个参数 `.`, `-u` ,`-A`<br/>`-u` 不包含新增<br/>`.` 包含新增,修改(Git2.X 后包含删除)<br/>**`-A` 包含新增,修改,删除.** |                    |
+| git commit                                       | wq q! qa!                                                    | -m -a              |
+| git restore                                      |                                                              |                    |
+| git branch <name>                                | 创建分支<name>                                               |                    |
+| git branch                                       | 列出所有分支                                                 | -a \| -d           |
+| git checkout [-b] <name>                         | 切换分支                                                     | -b(创建并切换分支) |
+| git merge <branchname>                           | 合并分支<branchname>到当前分支                               |                    |
+| git push <origin> <local>:<remote>               | 推送分支                                                     |                    |
+| git stash                                        | 将当前工作贮藏                                               |                    |
+| git stash list                                   | 查看贮藏的列表                                               |                    |
+| git stash apply                                  | 恢复贮藏中的工作内容                                         |                    |
+| git stash drop                                   | 删除此条贮藏                                                 |                    |
+| git stash pop                                    | 恢复贮藏中的工作内容并删除此条贮藏                           |                    |
+| git stash clear                                  | 清空 Git 栈                                                  |                    |
+|                                                  |                                                              |                    |
+|                                                  |                                                              |                    |
+|                                                  |                                                              |                    |
+|                                                  |                                                              |                    |
+|                                                  |                                                              |                    |
+|                                                  |                                                              |                    |
+|                                                  |                                                              |                    |
+| git show <id>                                    |                                                              |                    |
+| git log --graph --pretty=oneline --abbrev-commit |                                                              |                    |
+| git log                                          | 查看日志，按 q 退出                                          |                    |
+| git reset                                        | <none>/--soft/--mixed/--hard                                 |                    |
+|                                                  |                                                              |                    |
 
 https://www.jianshu.com/p/46ffff059092
 
@@ -265,7 +265,14 @@ git subtree add --prefix=GoldMiner/Assets/GBFramework git@gitlab.corp.cootek.com
 
 **gitlab复制分支到新的项目**
 
-git pull git地址 分支名称
+
+
+```
+//当前在Note项目的dev分支，下面命令将Note/dev 分支复制到 Note2项目中去。
+//cd 到Note工程的dev 分支执行
+git push git@github.com:yang851992774/Note2.git
+
+```
 
 
 
@@ -274,3 +281,43 @@ git pull git地址 分支名称
 git cherry-pick 65be1e5
 ```
 
+
+
+```
+项目 git     git@106.75.148.233:game/lovescape.git
+项目 MatchBattle/pvp  git@106.75.148.233:game/MatchBattle.git 
+
+1、进入MatchBattle/pvp 分支
+2、git push git@106.75.148.233:game/lovescape.git   (合并MatchBattle/pvp 到 Lovescape/pvp)
+3、进入Lovescape/pvp 分支，把需要到内容 遴选/合并/解决冲突 到pvp分支
+4、git@106.75.148.233:game/MatchBattle.git          (合并Lovescape/pvp 到 MatchBattle/pvp)
+
+这样就可以跨越多个项目进行合并了
+
+
+
+```
+
+
+
+```
+git config pull.rebase false  # merge 设置这个
+git config pull.rebase true		# rebase  一般禁用
+
+rebase和merge区别
+			master
+			|
+A->B->M
+	 |->C->D	
+	 			 |
+	 			 feature
+	 			 
+如果执行了
+git checkout feature
+git rebase master
+
+当在feature分支上执行git rebase master时，git会从master和featuer的共同祖先B开始提取feature分支上的修改，也就是C和D两个提交，先提取到。然后将feature分支指向master分支的最新提交上，也就是M。最后把提取的C和D接到M后面，注意这里的接法，官方没说清楚，实际是会依次拿M和C、D内容分别比较，处理冲突后生成新的C’和D’。一定注意，这里新C’、D’和之前的C、D已经不一样了，是我们处理冲突后的新内容，feature指针自然最后也是指向D’
+
+无论是个人开发，还是公司协作开发，只要没有特殊需求，用merge准没错！
+
+```
